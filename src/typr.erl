@@ -1,4 +1,4 @@
--module(router_type).
+-module(typr).
 
 
 %% Types
@@ -19,10 +19,15 @@
 ]).
 
 
+% gen specs
+
+-type gen_from() :: {Pid :: pid(), Tag :: term()}.
+
+-export_type([gen_from/0]).
+
 % gen_server specs
 
 -type gen_server_generic_message() :: term().
--type gen_server_generic_from() :: {Pid :: pid(), Ref :: term()}.
 
 -type gen_server_reply_simple(ReplyT, StateT) :: {reply, Reply :: ReplyT, NewState :: StateT}.
 -type gen_server_reply_timeout(ReplyT, StateT) :: {reply, Reply :: ReplyT, NewState :: StateT, Timeout :: non_neg_integer()}.
@@ -38,15 +43,15 @@
 -type gen_server_stop_noreply(StateT) :: {stop, Reason :: term(), NewState :: StateT}.
 -type gen_server_stop(StateT) :: gen_server_stop_simple(StateT) | gen_server_stop_noreply(StateT).
 
--type gen_server_return(StateT) :: gen_server_reply(Reply :: term(), StateT) | gen_server_noreply(StateT) | gen_server_stop(StateT).
+-type gen_server_return(ReplyT, StateT) :: gen_server_reply(ReplyT, StateT) | gen_server_noreply(StateT) | gen_server_stop(StateT).
 
 
 -export_type([
-    gen_server_generic_message/0, gen_server_generic_from/0,
+    gen_server_generic_message/0,
     gen_server_reply_simple/2, gen_server_reply_timeout/2, gen_server_reply_hibernate/2, gen_server_reply/2,
     gen_server_noreply_simple/1, gen_server_noreply_timeout/1, gen_server_noreply_hibernate/1, gen_server_noreply/1,
     gen_server_stop_simple/1, gen_server_stop_noreply/1, gen_server_stop/1,
-    gen_server_return/1
+    gen_server_return/2
 ]).
 
 
@@ -83,6 +88,9 @@
 ]).
 
 
+% gen_statem specs are defined in the gen_statem module itself
+% see https://erlang.org/doc/man/gen_statem.html sect. "Data Types"
+
 % supervisor specs
 
 -type supervisor_start_link_return() :: generic_return(
@@ -115,13 +123,6 @@
     supervisor_shutdown/0, supervisor_child_type/0, supervisor_modules/0,
     supervisor_child_spec/0, supervisor_flags/0, supervisor_init_return/0
 ]).
-
-
-% generic data structures
-
--type proplist(KeyT, ValueT) :: [{Key :: KeyT, Value :: ValueT}].
-
--export_type([proplist/2]).
 
 
 % generic return values

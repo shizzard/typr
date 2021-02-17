@@ -1,1 +1,1 @@
--define(test_spec(Mod), Mod() -> ok).
+-define(test_spec(Function), Function() -> ok).

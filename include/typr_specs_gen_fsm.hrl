@@ -7,33 +7,33 @@
     ignore.
 
 -spec handle_event(
-    Event :: marvin_helper_type:gen_fsm_generic_event(),
+    Event :: typr:gen_fsm_generic_event(),
     StateName :: atom(),
     State :: state()
 ) ->
-    marvin_helper_type:gen_fsm_return_noreply(state()).
+    typr:gen_fsm_return_noreply(state()).
 
 -spec handle_info(
-    Info :: marvin_helper_type:gen_fsm_generic_event(),
+    Info :: typr:gen_fsm_generic_event(),
     StateName :: atom(),
     State :: state()
 ) ->
-    marvin_helper_type:gen_fsm_return_noreply(state()).
+    typr:gen_fsm_return_noreply(state()).
 
 -spec handle_sync_event(
-    Event :: marvin_helper_type:gen_fsm_generic_event(),
-    From :: marvin_helper_type:gen_fsm_generic_from(),
+    Event :: typr:gen_fsm_generic_event(),
+    From :: typr:gen_fsm_generic_from(),
     StateName :: atom(),
     State :: state()
 ) ->
-    marvin_helper_type:gen_fsm_return_reply(state()).
+    typr:gen_fsm_return_reply(state()).
 
 -spec terminate(
     Reason :: term(),
     StateName :: atom(),
     State :: state()
 ) ->
-    marvin_helper_type:ok_return().
+    typr:ok_return().
 
 -spec code_change(
     OldVsn :: term(),
@@ -41,4 +41,4 @@
     State :: state(),
     Extra :: term()
 ) ->
-    marvin_helper_type:ok_return(StateName :: atom(), State :: state()).
+    typr:ok_return(StateName :: atom(), State :: state()).

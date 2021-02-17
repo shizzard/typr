@@ -1,3 +1,3 @@
 -spec init(Args :: term()) ->
-    marvin_helper_type:ok_return(Spec :: marvin_helper_type:supervisor_spec()) |
+    typr:ok_return(Spec :: typr:supervisor_spec()) |
     ignore.
