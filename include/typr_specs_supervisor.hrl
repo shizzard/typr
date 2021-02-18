@@ -1,3 +1,2 @@
 -spec init(Args :: term()) ->
-    typr:ok_return(Spec :: typr:supervisor_spec()) |
-    ignore.
+    typr:supervisor_init_return().

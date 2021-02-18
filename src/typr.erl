@@ -11,7 +11,7 @@
 -type application_start_type_failover() :: {failover, Node :: node()}.
 -type application_start_type() :: application_start_type_normal() | application_start_type_takeover() | application_start_type_failover().
 
--type application_start_return() :: generic_return(OkRet :: pid(), ErrorRet :: term()) | {ok, pid(), term()}.
+-type application_start_return() :: ok_return(OkRet1 :: pid(), OkRet2 :: term()) | generic_return(OkRet :: pid(), ErrorRet :: term()).
 
 -export_type([
     application_start_type_normal/0, application_start_type_takeover/0, application_start_type_failover/0, application_start_type/0,
