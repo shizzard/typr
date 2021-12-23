@@ -98,7 +98,7 @@ Typical supervisor with typespecs:
 ```erlang
 -module(some_sup).
 -behaviour(supervisor).
--include_lib("some_helper/include/some_specs_supervisor.hrl").
+-include_lib("typr/include/typr_specs_supervisor.hrl").
 
 -export([start_link/0, init/1]).
 
@@ -109,10 +109,7 @@ Typical supervisor with typespecs:
 
 
 -spec start_link() ->
-    typr:generic_return(
-        OkRet :: pid(),
-        ErrorRet :: {already_started, pid()} | {shutdown, term()} | term()
-    ).
+    typr:supervisor_start_link_return().
 
 start_link() ->
     supervisor:start_link({local, ?MODULE}, ?MODULE, []).
