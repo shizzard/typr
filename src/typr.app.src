@@ -3,7 +3,7 @@
     {maintainers, ["Denis Fakhrtdinov"]},
     {vsn, "0.2.3"},
     {registered, []},
-    {applications, []},
+    {applications, [kernel, stdlib]},
     {licenses, ["MIT", "BSD"]},
     {links, [{"GitHub", "https://github.com/shizzard/typr"}]}
 ]}.
