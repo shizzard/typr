@@ -30,61 +30,38 @@
 -type gen_server_generic_message() :: term().
 
 -type gen_server_reply_simple(ReplyT, StateT) :: {reply, Reply :: ReplyT, NewState :: StateT}.
--type gen_server_reply_timeout(ReplyT, StateT) :: {reply, Reply :: ReplyT, NewState :: StateT, Timeout :: non_neg_integer()}.
+-type gen_server_reply_timeout(ReplyT, StateT) :: {reply, Reply :: ReplyT, NewState :: StateT, Timeout :: non_neg_integer() | infinity}.
 -type gen_server_reply_hibernate(ReplyT, StateT) :: {reply, Reply :: ReplyT, NewState :: StateT, hibernate}.
--type gen_server_reply(ReplyT, StateT) :: gen_server_reply_simple(ReplyT, StateT) | gen_server_reply_timeout(ReplyT, StateT) | gen_server_reply_hibernate(ReplyT, StateT).
+-type gen_server_reply_continue(ReplyT, StateT) :: {reply, Reply :: ReplyT, NewState :: StateT, Continue :: {continue, term()}}.
+-type gen_server_reply(ReplyT, StateT) ::
+    gen_server_reply_simple(ReplyT, StateT) |
+    gen_server_reply_timeout(ReplyT, StateT) |
+    gen_server_reply_hibernate(ReplyT, StateT) |
+    gen_server_reply_continue(ReplyT, StateT).
 
 -type gen_server_noreply_simple(StateT) :: {noreply, NewState :: StateT}.
--type gen_server_noreply_timeout(StateT) :: {noreply, NewState :: StateT, Timeout :: non_neg_integer()}.
+-type gen_server_noreply_timeout(StateT) :: {noreply, NewState :: StateT, Timeout :: non_neg_integer() | infinity}.
 -type gen_server_noreply_hibernate(StateT) :: {noreply, NewState :: StateT, hibernate}.
--type gen_server_noreply(StateT) :: gen_server_noreply_simple(StateT) | gen_server_noreply_timeout(StateT) | gen_server_noreply_hibernate(StateT).
+-type gen_server_noreply_continue(StateT) :: {noreply, NewState :: StateT, Continue :: {continue, term()}}.
+-type gen_server_noreply(StateT) ::
+    gen_server_noreply_simple(StateT) |
+    gen_server_noreply_timeout(StateT) |
+    gen_server_noreply_hibernate(StateT) |
+    gen_server_noreply_continue(StateT).
 
--type gen_server_stop_simple(StateT) :: {stop, Reason :: term(), Reply :: term(), NewState :: StateT}.
+-type gen_server_stop_simple(ReplyT, StateT) :: {stop, Reason :: term(), Reply :: ReplyT, NewState :: StateT}.
 -type gen_server_stop_noreply(StateT) :: {stop, Reason :: term(), NewState :: StateT}.
--type gen_server_stop(StateT) :: gen_server_stop_simple(StateT) | gen_server_stop_noreply(StateT).
+-type gen_server_stop(ReplyT, StateT) :: gen_server_stop_simple(ReplyT, StateT) | gen_server_stop_noreply(StateT).
 
--type gen_server_return(ReplyT, StateT) :: gen_server_reply(ReplyT, StateT) | gen_server_noreply(StateT) | gen_server_stop(StateT).
+-type gen_server_return(ReplyT, StateT) :: gen_server_reply(ReplyT, StateT) | gen_server_noreply(StateT) | gen_server_stop(ReplyT, StateT).
 
 
 -export_type([
     gen_server_generic_message/0,
-    gen_server_reply_simple/2, gen_server_reply_timeout/2, gen_server_reply_hibernate/2, gen_server_reply/2,
-    gen_server_noreply_simple/1, gen_server_noreply_timeout/1, gen_server_noreply_hibernate/1, gen_server_noreply/1,
-    gen_server_stop_simple/1, gen_server_stop_noreply/1, gen_server_stop/1,
+    gen_server_reply_simple/2, gen_server_reply_timeout/2, gen_server_reply_hibernate/2, gen_server_reply_continue/2, gen_server_reply/2,
+    gen_server_noreply_simple/1, gen_server_noreply_timeout/1, gen_server_noreply_hibernate/1, gen_server_noreply_continue/1, gen_server_noreply/1,
+    gen_server_stop_simple/2, gen_server_stop_noreply/1, gen_server_stop/2,
     gen_server_return/2
-]).
-
-
-% gen_fsm specs
-
--type gen_fsm_generic_event() :: term().
--type gen_fsm_generic_from() :: {Pid :: pid(), Ref :: term()}.
-
--type gen_fsm_noreply_simple(StateT) :: {next_state, NextStateName :: atom(), NewStateData :: StateT}.
--type gen_fsm_noreply_timeout(StateT) :: {next_state, NextStateName :: atom(), NewStateData :: StateT, Timeout :: non_neg_integer()}.
--type gen_fsm_noreply_hibernate(StateT) :: {next_state, NextStateName :: atom(), NewStateData :: StateT, hibernate}.
--type gen_fsm_noreply(StateT) :: gen_fsm_noreply_simple(StateT) | gen_fsm_noreply_timeout(StateT) | gen_fsm_noreply_hibernate(StateT).
-
--type gen_fsm_reply_simple(StateT) :: {reply, Reply :: term(), NextStateName :: atom(), NewStateData :: StateT}.
--type gen_fsm_reply_timeout(StateT) :: {reply, Reply :: term(), NextStateName :: atom(), NewStateData :: StateT, Timout :: non_neg_integer()}.
--type gen_fsm_reply_hibernate(StateT) :: {reply, Reply :: term(), NextStateName :: atom(), NewStateData :: StateT, hibernate}.
--type gen_fsm_reply(StateT) :: gen_fsm_reply_simple(StateT) | gen_fsm_reply_timeout(StateT) | gen_fsm_reply_hibernate(StateT) | gen_fsm_noreply(StateT).
-
--type gen_fsm_stop_noreply(StateT) :: {stop, Reason :: term(), NewStateData :: StateT}.
--type gen_fsm_stop_reply(StateT) :: {stop, Reason :: term(), Reply :: term(), NewStateData :: StateT}.
--type gen_fsm_stop(StateT) :: gen_fsm_stop_noreply(StateT) | gen_fsm_stop_reply(StateT).
-
--type gen_fsm_return_reply(StateT) :: gen_fsm_reply(StateT) | gen_fsm_stop(StateT).
--type gen_fsm_return_noreply(StateT) :: gen_fsm_noreply(StateT) | gen_fsm_stop(StateT).
--type gen_fsm_return(StateT) :: gen_fsm_return_reply(StateT) | gen_fsm_return_noreply(StateT).
-
-
--export_type([
-    gen_fsm_generic_event/0, gen_fsm_generic_from/0,
-    gen_fsm_noreply_simple/1, gen_fsm_noreply_timeout/1, gen_fsm_noreply_hibernate/1, gen_fsm_noreply/1,
-    gen_fsm_reply_simple/1, gen_fsm_reply_timeout/1, gen_fsm_reply_hibernate/1, gen_fsm_reply/1,
-    gen_fsm_stop_noreply/1, gen_fsm_stop_reply/1, gen_fsm_stop/1,
-    gen_fsm_return_reply/1, gen_fsm_return_noreply/1, gen_fsm_return/1
 ]).
 
 

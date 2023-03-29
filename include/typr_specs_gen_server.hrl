@@ -11,7 +11,7 @@
     From :: typr:gen_from(),
     State :: state()
 ) ->
-    typr:gen_server_return(state()).
+    typr:gen_server_return(term(), state()).
 
 -spec handle_cast(
     Request :: typr:gen_server_generic_message(),
