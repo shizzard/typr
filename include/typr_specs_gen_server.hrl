@@ -2,7 +2,7 @@
     Args :: term()
 ) ->
     {ok, State :: state()} |
-    {ok, State :: state(), non_neg_integer() | hibernate} |
+    {ok, State :: state(), non_neg_integer() | hibernate | {continue, Continue :: term()}} |
     {stop, Reason :: term()} |
     ignore.
 
